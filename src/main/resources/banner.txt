@@ -1,0 +1,9 @@
+${AnsiColor.BRIGHT_BLUE}
+Application Version: ${tlapp.version}
+Spring Boot Version: ${spring-boot.version}
+***************************************
+* TianlangPortal                                                                                   *
+* 天朗大数据平台之门户 *
+*                                     *
+***************************************
+${AnsiColor.BLACK}

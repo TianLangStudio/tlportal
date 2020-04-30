@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>前端展示</title>
+</head>
+<body>
+<a th:href="@{/admin/login}">
+点我跳转到后台
+</a>
+</body>
+<script>
+    window.location.href = window.rootPath + "/admin/login";
+/*var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?76968355bd5f8c263c65a1ad6dca8fa8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();*/
+</script>
+</html>

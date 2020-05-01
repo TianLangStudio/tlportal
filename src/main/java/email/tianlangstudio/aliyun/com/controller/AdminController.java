@@ -12,7 +12,6 @@ import email.tianlangstudio.aliyun.com.model.custom.BootstrapTree;
 import email.tianlangstudio.aliyun.com.model.custom.TitleVo;
 import email.tianlangstudio.aliyun.com.shiro.util.ShiroUtils;
 import email.tianlangstudio.aliyun.com.util.StringUtils;
-import com.google.code.kaptcha.Constants;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -69,7 +68,6 @@ public class AdminController extends BaseController{
 	
 	/**
 	 * 请求到登陆界面
-	 * @param request
 	 * @return
 	 */
 	@ApiOperation(value="请求到登陆界面",notes="请求到登陆界面")
@@ -109,9 +107,6 @@ public class AdminController extends BaseController{
 		Boolean yz=false;
 		if(TLAppConfig.getRollVerification()) {//滚动验证
 			yz=true;
-		}else {//图片验证
-			 String scode = (String)request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-			 yz=StringUtils.isNotEmpty(scode)&&StringUtils.isNotEmpty(code)&&scode.equals(code);
 		}
 		 //判断验证码
 		 if(yz){

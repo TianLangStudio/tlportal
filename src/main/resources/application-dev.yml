@@ -48,13 +48,18 @@ spring:
       wall:
         config:
           multi-statement-allow: true
-  data:
-    elasticsearch:
-      cluster-name: docker-cluster
-      cluster-nodes: 127.0.0.1:9300
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        dialect: org.hibernate.dialect.MySQL5Dialect
 
+#  data:
+#    elasticsearch:
+#      cluster-name: docker-cluster
+#      cluster-nodes: 127.0.0.1:9300　　　
 #mysql 8.0
-
 #spring:
 #  datasource:
 #    type: com.alibaba.druid.pool.DruidDataSource

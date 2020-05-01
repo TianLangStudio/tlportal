@@ -31,7 +31,7 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
  * @date 2019-12-06 21:11
  */
 @Configuration
-@MapperScan(basePackages = "email.tianlangstudio.aliyun.com")
+@MapperScan(basePackages = "email.tianlangstudio.aliyun.com.mapper")
 public class MybatisConfig {
     @Bean
     public SqlSessionFactory sqlSessionFactory(AbstractRoutingDataSource routingDataSource) throws Exception {

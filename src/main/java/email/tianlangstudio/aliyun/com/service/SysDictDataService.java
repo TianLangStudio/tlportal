@@ -57,6 +57,17 @@ public class SysDictDataService implements BaseService<TSysDictData, TSysDictDat
 	        return  pageInfo;
 	 }
 
+	public List<TSysDictData> listByType(String dictType){
+		TSysDictDataExample testExample=new TSysDictDataExample();
+		testExample.setOrderByClause("dict_sort ASC");
+		if(dictType!=null&&!"".equals(dictType)){
+				testExample.createCriteria().andDictTypeEqualTo(dictType);
+		}
+		List<TSysDictData> list= tSysDictDataMapper.selectByExample(testExample);
+
+		return  list;
+	}
+
 
 	@Override
 	public int deleteByPrimaryKey(String ids) {
@@ -125,11 +136,7 @@ public class SysDictDataService implements BaseService<TSysDictData, TSysDictDat
 		return tSysDictDataMapper.deleteByExample(example);
 	}
 	
-	/**
-	 * 检查name
-	 * @param TSysDictData
-	 * @return
-	 */
+
 	public int checkNameUnique(TSysDictData tSysDictData){
 		TSysDictDataExample example=new TSysDictDataExample();
 		example.createCriteria().andDictValueEqualTo(tSysDictData.getDictValue());

@@ -29,3 +29,10 @@ long long ago 在公司做了一个大数据平台的应用管理中心，用来
 ```
 开发中
 ```
+
+## Q&A
+> 修改了项目报名后报Dao类和Model类加载失败Not a managed type
+- 如果使用的JPA需要查看common/conf/MasterDataSourceConfig类，里面有两处包名配置：
+一处在类注解上是Dao包扫描路径，一处在masterEntityManagerFactory方法中是Model所在包名
+- 如果使用的MyBatis需要查看common/conf/MyBatisConfig类，在类注解中有Mapper包扫描路径
+

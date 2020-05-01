@@ -23,7 +23,7 @@ import javax.sql.DataSource;
  * @date 17-4-13
  */
 @Configuration
-@EnableJpaRepositories(value = "email.tianlangstudio.aliyun.com.email.analysis",
+@EnableJpaRepositories(value = "email.tianlangstudio.aliyun.com.portal.repo",
         entityManagerFactoryRef = "masterEntityManagerFactory",
         transactionManagerRef = "masterTransactionManager")
 public class MasterDataSourceConfig {
@@ -86,7 +86,8 @@ public class MasterDataSourceConfig {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("email.tianlangstudio.aliyun.com.email.analysis");
+        factory.setPackagesToScan(
+                "email.tianlangstudio.aliyun.com.portal.model");//JPA model存放目录也可以是上级目录
         factory.setDataSource(masterDataSource);//数据源
 
         factory.setJpaPropertyMap(jpaProperties.getProperties());

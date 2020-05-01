@@ -1,6 +1,11 @@
 package email.tianlangstudio.aliyun.com.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -12,6 +17,7 @@ import java.util.regex.Pattern;
  */
 public class BeanUtils
 {
+    private final static Logger logger  = LoggerFactory.getLogger(BeanUtils.class);
     /** Bean方法名中属性名开始的下标 */
     private static final int BEAN_METHOD_PROP_INDEX = 3;
 
@@ -117,5 +123,36 @@ public class BeanUtils
     public static boolean isMethodPropEquals(String m1, String m2)
     {
         return m1.substring(BEAN_METHOD_PROP_INDEX).equals(m2.substring(BEAN_METHOD_PROP_INDEX));
+    }
+
+    //把copyFrom的非空字段复制到origin中
+    public static  <T> T extendBean(T origin, T copyFrom) throws Exception{
+
+        Class originBeanClass = origin.getClass();
+        Class copyFromBeanClass = copyFrom.getClass();
+
+        Field[] originFields = originBeanClass.getDeclaredFields();
+        Field[] copyFromFields = copyFromBeanClass.getDeclaredFields();
+
+        for (int i = 0; i < copyFromFields.length; i++) {
+            Field originField = originFields[i];
+            Field copyFromField = copyFromFields[i];
+            int modifiers = originField.getModifiers();
+            if(Modifier.isStatic(modifiers) || Modifier.isFinal(modifiers)) {//如果是静态或者是final的不处理
+                continue;
+            }
+            originField.setAccessible(true);
+            copyFromField.setAccessible(true);
+            try {
+                if (copyFromField.get(copyFrom) != null) {
+                    originField.set(origin, copyFromField.get(copyFrom));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.error("extendBean error", e);
+                throw e;
+            }
+        }
+        return origin;
     }
 }

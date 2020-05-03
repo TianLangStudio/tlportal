@@ -39,6 +39,7 @@ user:例如/admins/user/**=user没有参数表示必须存在用户，当登入�
 		LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 		//对所有用户认证
 		filterChainDefinitionMap.put("/static/**", "anon");
+		filterChainDefinitionMap.put("/portal/**/list/**", "anon");
 		filterChainDefinitionMap.put("/admin/login", "anon");
 		filterChainDefinitionMap.put("/admin/logout", "logout");
 		//放验证码
@@ -49,9 +50,9 @@ user:例如/admins/user/**=user没有参数表示必须存在用户，当登入�
 		filterChainDefinitionMap.put("/websocket", "anon");
 		//前端
 		filterChainDefinitionMap.put("/", "anon");
-		filterChainDefinitionMap.put("/index", "anon");//任务调度暂时放开
-		
-		filterChainDefinitionMap.put("/quartz/**", "anon");
+		filterChainDefinitionMap.put("/index", "anon");
+		//任务调度暂时放开
+		//filterChainDefinitionMap.put("/quartz/**", "anon");
 		
 		//开放APicontroller
 		filterChainDefinitionMap.put("/ApiController/**", "anon");

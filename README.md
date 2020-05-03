@@ -11,6 +11,10 @@ long long ago 在公司做了一个大数据平台的应用管理中心，用来
    若不是互联网彩票被叫停，我们应该还在一起快乐的玩耍
    感谢 感激
 ```
+### 截图
+![添加应用分类](https://raw.githubusercontent.com/TianLangStudio/tlportal/master/doc/imgs/appCategoryAdd.png) 
+![添加应用](https://raw.githubusercontent.com/TianLangStudio/tlportal/master/doc/imgs/appAdd.png) 
+![前端展示](https://raw.githubusercontent.com/TianLangStudio/tlportal/master/doc/imgs/appList.png) 
 ### 前端技术栈
 - react
 - webpack

@@ -10,6 +10,7 @@ import email.tianlangstudio.aliyun.com.common.base.BaseController;
 import email.tianlangstudio.aliyun.com.common.domain.AjaxResult;
 import email.tianlangstudio.aliyun.com.portal.model.App;
 import email.tianlangstudio.aliyun.com.portal.service.AppSre;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,19 @@ public class AppCtrl extends BaseController {
     @Autowired
     private AppSre appSre;
 
+    @GetMapping("/view")
+    public String viewApp() {
+        return "/portal/list";
+    }
+
     @GetMapping("/list/all/show")
     @ResponseBody
     public AjaxResult listAllShowApp() {
         return AjaxResult.successData(appSre.findAllShowApp());
     }
 
-    @GetMapping("/list/all")
+
+    @RequestMapping("/list/all")
     @ResponseBody
     public AjaxResult listAllApp() {
         return AjaxResult.successData(appSre.findAll());
@@ -46,12 +53,29 @@ public class AppCtrl extends BaseController {
     //添加修改App
     @PostMapping("/save")
     @ResponseBody
+    @RequiresPermissions("portal:app:save")
     public AjaxResult saveApp(App app) {
         AjaxResult ajaxResult = null;
         try {
             ajaxResult = AjaxResult.successData(appSre.save(app));
         } catch (Exception e) {
             logger.error("saveApp error:", e);
+            ajaxResult = AjaxResult.error(e.getMessage());
+        }
+        return ajaxResult;
+    }
+
+    //删除App
+    @PostMapping("/remove")
+    @ResponseBody
+    @RequiresPermissions("portal:app:save")
+    public AjaxResult removeApp(String id) {
+        AjaxResult ajaxResult = null;
+        try {
+            appSre.removeAppById(id);
+            ajaxResult = AjaxResult.success("删除成功");
+        } catch (Exception e) {
+            logger.error("removeApp error:", e);
             ajaxResult = AjaxResult.error(e.getMessage());
         }
         return ajaxResult;

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.pollix.at/thymeleaf/shiro" lang="zh_cn">
+<head>
+    <meta charset="UTF-8">
+    <title>应用信息管理</title>
+    　　 <link th:href="@{/static/admin/bootstarp/4.2.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/static/admin/bootstarp/bootstrap-table/1.16.0/bootstrap-table.min.css}" rel="stylesheet">
+    　　 <!--link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css"-->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/fortawesome/fontawesome-free/5.12.1/css/all.min.css}">
+
+    <script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/static/js/popper.js/1.14.6/umd/popper.min.js}"></script>
+    <!--script src="https://unpkg.com/@popperjs/core@2.3.3/dist/umd/popper.min.js"></script-->
+    <script th:src="@{/static/admin/bootstarp/4.2.1/js/bootstrap.min.js}"></script>
+
+
+    <script th:src="@{/static/js/tableexport.jquery.plugin/tableExport.min.js}"></script>
+    <script th:src="@{/static/admin/bootstarp/bootstrap-table/1.16.0/bootstrap-table.min.js}"></script>
+    <script th:src="@{/static/admin/bootstarp/bootstrap-table/1.16.0/locale/bootstrap-table-zh-CN.min.js}"></script>
+    <script th:src="@{/static/admin/bootstarp/bootstrap-table/1.16.0/extensions/export/bootstrap-table-export.min.js}"></script>
+
+    <style>
+        .select,
+        #locale {
+            width: 100%;
+        }
+        .like {
+            margin-right: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+
+
+<!-- ###############################代码编写处############################### -->
+
+<!-- 右边内容 -->
+
+<div class="container-fluid paper-wrap bevel tlbr">
+        <!-- 内容 -->
+        <!-- 结束标题 通用-->
+        <div class="content-wrap">
+            <!-- 结束内容 -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- 空白页开始-->
+                    <div class="nest" id="Blank_PageClose">
+                        
+                        <div class="body-nest" id="Blank_Page_Content">
+                            <!-- 工具条 -->
+                            <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                                <button data-toggle="modal" data-target="#app-edit-modal" type="button" class="btn btn-primary">
+                                    <span class="entypo-plus-squared"></span>&nbsp;&nbsp;新增
+                                </button>
+                               <!--<button onclick="$.operate.batRemove()" type="button" class="btn btn-info">
+                                    <span class="entypo-trash"></span>&nbsp;&nbsp;删除
+                               </button>-->
+                               
+                           </div>
+                            <!-- 工具条 end-->
+                            <table
+                                    id="table"
+                                    data-toolbar="#exampleTableEventsToolbar"
+                                    data-search="false"
+                                    data-show-refresh="true"
+                                    data-show-toggle="true"
+                                    data-show-fullscreen="true"
+                                    data-show-columns="true"
+                                    data-show-columns-toggle-all="true"
+                                    data-sort-order="desc"
+                                    data-remember-order="false"
+                                    data-detail-view="false"
+                                    data-show-export="true"
+                                    data-click-to-select="true"
+                                    data-minimum-count-columns="2"
+                                    data-show-pagination-switch="true"
+                                    data-pagination="true"
+                                    data-id-field="id"
+                                    data-page-list="[100]"
+                                    data-show-footer="false"
+                                    data-side-pagination="client"
+                                    data-url="/portal/app/list/all">
+                            </table>
+                         <!--  <table id="dataTable" class="table-striped footable-res footable metro-blue" data-page-size="6">
+                                   
+                                    
+                           </table>-->
+                           
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 空白页结束 -->
+            </div>
+            <!-- 结束内容 -->
+        </div>
+    </div>
+
+<!-- 结束右边内容 -->
+
+<!--新增修改案件信息弹出框 开始-->
+<div class="modal fade" id="app-edit-modal" tabindex="-1" role="dialog" aria-labelledby="应用信息编辑窗口">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">应用信息编辑</h4>
+            </div>
+            <div class="modal-body">
+                <form id="app-edit-form">
+                    <div class="form-group">
+                        <label for="category-id" class="control-label">所属分类:</label>
+                        <select  name="categoryId" class="form-control" id="category-id">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="app-state" class="control-label">是否显示:</label>
+                        <select  name="state" class="form-control" id="app-state">
+                            <option value="1" selected>显示</option>
+                            <option value="0">不显示</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="app-name" class="control-label">应用名称:</label>
+                        <input type="text" name="name" class="form-control" id="app-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="app-intro" class="control-label">应用简介:</label>
+                        <textarea class="form-control" name="intro" id="app-intro"></textarea>
+                    </div>
+                    <div class="form-group hidden">
+                        <label for="app-url" class="control-label">应用访问链接:</label>
+                        <input type="text" name="url"  class="form-control" id="app-url">
+                    </div>
+                    <div class="form-group hidden">
+                        <label for="app-logo" class="control-label">应用图标链接:</label>
+                        <input type="text" name="logo"  class="form-control" id="app-logo">
+                    </div>
+                    <input type="text" title="应用ID不可编辑" name="id" id="app-id" readonly class="hidden form-control">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="app-save" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--新增修改案件信息弹出框 结束-->
+<!-- ###############################代码编写处end############################### -->
+
+
+
+<script type="text/javascript">
+
+<!-- 导出 -->
+var appUrl="/portal/app/list/all";
+var appSaveUrl="/portal/app/save";
+var appRemoveUrl="/portal/app/remove";
+var categoryUrl="/portal/app/list/category";
+function categoryFormatter(categoryId) {
+    var options = "";
+    for(var k in categoryObj) {
+        options += "<option " +
+            (k == categoryId?" selected ":"");
+
+        options +=  ' value="'+k+'" >'+categoryObj[k]+'</option>';
+    }
+    return options;
+
+}
+
+var options = {
+    height: 666,
+    locale: "zh-CN",
+    dataField:"data",
+        responseHandler: function (a) {
+		    //alert(a);
+            return a
+        },
+        pageList: [100],
+	  　	  　	  　	  　columns: [
+			{
+			    field: 'id',
+			    title: '序号',
+                formatter:function(v,row,idx) {
+			        return idx + 1;
+                }
+			},
+			{
+			    field: 'name',
+			    title: '应用名称'
+			},
+           {
+               field: 'intro',
+               title: '简介'
+           },
+           {
+               field: 'url',
+               title: '访问链接'
+           },
+           {
+               field: 'logo',
+               title: '图标链接'
+           },
+           {
+               field: 'categoryId',
+               title: '所属分类',
+               formatter:function (value) {
+                   return categoryObj[value] || "暂无分类";
+               }
+           },
+           {
+               field: 'state',
+               title: '是否显示',
+               formatter:function (value) {
+                   return value == 1 ? "显示":"不显示";
+               }
+           },
+
+           {
+			    field: 'creator',
+			    title: '操作人'
+			},
+           {
+               field: 'createAt',
+               title: '操作时间'
+           }, {
+               field: 'id',
+               title: '操作',
+               formatter:function(v, row) {
+                   return '<button class="btn btn-info" data-toggle="modal" data-target="#app-edit-modal" data-id="' +
+                           row.id +
+                       '" data-name="'+
+                           row.name
+                       +'" data-logo="' +
+                           row.logo +
+                       '" data-url="' +
+                           row.url +
+                       '" data-intro="' +
+                           row.intro +
+                       '" data-categoryId="' +
+                           row.categoryId +
+                       '  data-state=' +
+                           row.state +
+                       '">编辑</button><button class="remove-btn btn btn-danger" data-id="'+row.id+'">删除</button>';
+               }
+           }]
+  };
+
+    $('#app-edit-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id');
+        var logo = button.data('logo');
+        var name = button.data('name');
+        var intro = button.data('intro');
+        var url = button.data('url');
+        var state = button.data('state');
+        var categoryId = button.data('categoryId');
+        var modal = $(this)
+        modal.find('#app-id').val(id);
+        modal.find('#app-logo').val(logo);
+        modal.find('#app-name').val(name);
+        modal.find('#app-intro').val(intro);
+        modal.find('#app-state').val(state);
+        modal.find('#app-url').val(url);
+        modal.find('#app-categoryId').val(categoryId);
+    })
+　　　
+　　 $('#table').on('click', '.remove-btn', function () {
+       var $btn = $(this);
+       var id = $btn.data(id);
+       id = id.id || id;
+       confirm("删除后不能恢复！还删吗？") && $.post(appRemoveUrl, {
+           id:id
+       }).then(function (res) {
+           if(res.code == 200) {
+               $('#table').bootstrapTable('refresh');
+           }else {
+               alert("删除出错了");
+           }
+       })
+    })
+    $('#app-save').on("click", function () {
+        var dataFormJson=$("#app-edit-form").serialize();
+        $.ajax({
+            cache : true,
+            type : "POST",
+            url : appSaveUrl,
+            data : dataFormJson,
+            async : false,
+            error : function(request) {
+                alert("出错了" + request.msg);
+            },
+            success : function() {
+                $('#table').bootstrapTable('refresh');
+                $('#app-edit-modal').modal('toggle');
+            }
+        });
+    })
+    var categoryObj = {};
+    $.get({
+        url:categoryUrl,
+        async:false
+    }).then(function (res) {
+        if(res.code == 200) {
+            var data = res.data || [];
+            data.forEach(function(category) {
+                categoryObj[category.id] = category.dictLabel;
+            })
+            $('#category-id').html(categoryFormatter())
+            //初始化列表
+            $('#table').bootstrapTable('destroy').bootstrapTable(options);
+
+        }
+    });
+</script>
+
+</body>
+
+
+</html>

@@ -46,17 +46,19 @@ public class AppSre {
     @Transactional(value = "masterTransactionManager")
     public App save(App app) throws Exception{
         String userName = ShiroUtils.getUser().getUsername();
+        Date date = new Date();
+        app.setUpdater(userName);
+        app.setUpdateAt(date);
+        app.setUpdater(userName);
         if(StringUtils.isEmpty(app.getId())) {//新增
             String id = SnowflakeIdWorker.getUUID();
             app.setId(id);
             app.setCreator(userName);
-            app.setCreateAt(new Date());
+            app.setCreateAt(date);
         }else {//修改
             Optional<App> oldOpt = findById(app.getId());
             assert(oldOpt.isPresent());
             App old = oldOpt.get();
-            app.setUpdateAt(new Date());
-            app.setUpdater(userName);
             app = BeanUtils.extendBean(old, app);
         }
         return appRepo.save(app);
@@ -69,7 +71,16 @@ public class AppSre {
         return appRepo.findByStateOrderBySort(App.STATE_SHOW);
     }
 
-
+    /**
+     * 新增修改　如果有ID就修改　没ID就是新增
+     * **/
+    @TargetDataSource(DataSourceType.MASTER)
+    @Transactional(value = "masterTransactionManager")
+    public void removeAppById(String id) {
+        if(StringUtils.isNotEmpty(id)) {
+            appRepo.deleteById(id);
+        }
+    }
 
     public List<App> findAll() {
         return appRepo.findAll();

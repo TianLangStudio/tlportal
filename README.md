@@ -15,6 +15,7 @@ long long ago 在公司做了一个大数据平台的应用管理中心，用来
 ![添加应用分类](https://raw.githubusercontent.com/TianLangStudio/tlportal/master/doc/imgs/appCategoryAdd.png) 
 ![添加应用](https://raw.githubusercontent.com/TianLangStudio/tlportal/master/doc/imgs/appAdd.png) 
 ![前端展示](https://raw.githubusercontent.com/TianLangStudio/tlportal/master/doc/imgs/appList.png) 
+![打开应用](https://raw.githubusercontent.com/TianLangStudio/tlportal/master/doc/imgs/appOpen.png) 
 ### 前端技术栈
 - react
 - webpack

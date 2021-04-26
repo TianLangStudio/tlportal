@@ -19,7 +19,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<commons.fileupload.version>1.3.3</commons.fileupload.version>
-		<commons.io.version>2.5</commons.io.version>
+		<commons.io.version>2.7</commons.io.version>
 		<elastic.version>7.6.2</elastic.version>
 		<spring-boot.version>2.2.5.RELEASE</spring-boot.version>
 		<!-- The hibernate version should match the one managed by
